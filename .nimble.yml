@@ -1,0 +1,17 @@
+dockerfile: "./Dockerfile"
+
+repo:
+    url: "hub.docker.com"
+    // Note: username and password are configured via web
+
+push:
+    // Possible values:
+    //   false pushes no tags in the repo
+    //   "*" pushes all tags in the repo
+    //   "v1.*|v2.*" pushes all tags which begin with "v1." or "v2."
+    tags: *
+    //   false pushes no branches in the repo
+    //   "*" pushes all branches in the repo (which build without errors)
+    //   "my-*|your-*" pushes all branches which begin with "my-" or "your-"
+    branches: *
+
