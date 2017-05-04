@@ -1,9 +1,9 @@
 # VERSION 1
 # Command format: Instruction [arguments / command] ..
 
-FROM centos
+FROM ubuntu
 
-MAINTAINER walker monkey@fonsview.com
+MAINTAINER monkey monkey@fonsview.com
 
 ENV MONGODB_VERSION=3.2.10 \
     TERM=xterm
