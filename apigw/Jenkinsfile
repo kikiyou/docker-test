@@ -4,13 +4,14 @@ node("master") {
     // def build_file_path = '"/home/monkey/it-fs/Upload/SS Department/monkey/mongodb"'
     sh "pwd"
     sh "ls -l"
-    config = new ConfigSlurper('mongodb').parse(new File('./config.groovy').toURL())
-    def build_file = config.build_file
-    def build_version = config.build_version
-    def build_file_path = config.build_file_path
+
     stage('Preparation') { // for display purposes
       // Get some code from a GitHub repository
-      git 'http://github.com/kikiyou/docker-test'
+        git 'http://github.com/kikiyou/docker-test'
+        config = new ConfigSlurper('mongodb').parse(new File('./config.groovy').toURL())
+        def build_file = config.build_file
+        def build_version = config.build_version
+        def build_file_path = config.build_file_path
       // Get the Maven tool.
       // ** NOTE: This 'M3' Maven tool must be configured
       // **       in the global configuration.           
