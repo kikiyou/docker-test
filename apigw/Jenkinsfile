@@ -1,4 +1,4 @@
-// import groovy.util.ConfigObject
+import groovy.util.ConfigObject
 import groovy.util.ConfigSlurper
 
 @NonCPS
