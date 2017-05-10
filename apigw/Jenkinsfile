@@ -4,8 +4,9 @@ node("master") {
     // def build_file_path = '"/home/monkey/it-fs/Upload/SS Department/monkey/mongodb"'
     sh "pwd"
     sh "ls -l"
-    println "---${WORKSPACE}---"
+    
     file = "${WORKSPACE}/config.groovy"
+    println "---${file}---"
     stage('Preparation') { // for display purposes
       // Get some code from a GitHub repository
         git 'http://github.com/kikiyou/docker-test'
