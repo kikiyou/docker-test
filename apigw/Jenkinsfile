@@ -10,7 +10,7 @@ node("master") {
     stage('Preparation') { // for display purposes
       // Get some code from a GitHub repository
         git 'http://github.com/kikiyou/docker-test'
-        config = new ConfigSlurper().parse(new File("/tmp/config.groovy").toURL())
+        def config = new ConfigSlurper().parse(new File("/tmp/config.groovy").toURL())
         def build_file = config.mongodb.build_file
         def build_version = config.mongodb.build_version
         def build_file_path = config.mongodb.build_file_path
