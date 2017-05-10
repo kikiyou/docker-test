@@ -1,9 +1,10 @@
-import groovy.util.ConfigObject
+// import groovy.util.ConfigObject
 import groovy.util.ConfigSlurper
 
 @NonCPS
 def configParse(def file) {
     // new groovy.json.JsonSlurperClassic().parseText(json)
+    echo "jjjjjjjjjjjjjj"
     new groovy.util.ConfigSlurper().parse(new File(file).toURL())
 }
 
