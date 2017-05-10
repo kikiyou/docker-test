@@ -7,7 +7,7 @@ def configParse(file) {
     echo "jjjjjjjjjjjjjj"
     def cc = new File(file).toURL()
     println "${cc}"
-    new groovy.util.ConfigSlurper().parse(cc)
+    def config = new groovy.util.ConfigSlurper().parse(cc)
 }
 
 node("master") {
