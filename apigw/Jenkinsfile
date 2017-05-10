@@ -6,7 +6,7 @@ def configParse(file) {
     // new groovy.json.JsonSlurperClassic().parseText(json)
     echo "jjjjjjjjjjjjjj"
     def cc = new File(file).toURL()
-    echo ${cc}
+    echo cc
     new groovy.util.ConfigSlurper().parse(cc)
 }
 
