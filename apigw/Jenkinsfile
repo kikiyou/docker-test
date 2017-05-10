@@ -28,6 +28,7 @@ node("master") {
         def build_file = config.mongodb.build_file
         def build_version = config.mongodb.build_version
         def build_file_path = config.mongodb.build_file_path
+        config = null
       // Get the Maven tool.
       // ** NOTE: This 'M3' Maven tool must be configured
       // **       in the global configuration.           
