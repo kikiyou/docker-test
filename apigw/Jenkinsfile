@@ -1,3 +1,12 @@
+import groovy.util.ConfigObject
+import groovy.util.ConfigSlurper
+
+@NonCPS
+def configParse(def file) {
+    // new groovy.json.JsonSlurperClassic().parseText(json)
+    new groovy.util.ConfigSlurper().parse(new File(file).toURL())
+}
+
 node("master") {
     // def build_file = 'Fonsview.APIGW_R1.0.0_743.tar.gz'
     // def build_version = '743'
@@ -10,7 +19,9 @@ node("master") {
     stage('Preparation') { // for display purposes
       // Get some code from a GitHub repository
         git 'http://github.com/kikiyou/docker-test'
-        def config = new ConfigSlurper().parse(new File("/tmp/config.groovy").toURL())
+        // def config = new ConfigSlurper().parse(new File("/tmp/config.groovy").toURL())
+        def config = configParse('/tmp/config.groovy')
+
         def build_file = config.mongodb.build_file
         def build_version = config.mongodb.build_version
         def build_file_path = config.mongodb.build_file_path
