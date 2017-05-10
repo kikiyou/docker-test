@@ -1,8 +1,11 @@
 node("master") {
-    def build_file = 'Fonsview.APIGW_R1.0.0_743.tar.gz'
-    def build_version = '743'
-    def build_file_path = '"/home/monkey/it-fs/Upload/SS Department/monkey/mongodb"'
-
+    // def build_file = 'Fonsview.APIGW_R1.0.0_743.tar.gz'
+    // def build_version = '743'
+    // def build_file_path = '"/home/monkey/it-fs/Upload/SS Department/monkey/mongodb"'
+    config = new ConfigSlurper('mongodb').parse(new File('../mon.grooovy').toURL())
+    def build_file = config.build_file
+    def build_version = config.build_version
+    def build_file_path = config.build_file_path
     stage('Preparation') { // for display purposes
       // Get some code from a GitHub repository
       git 'http://github.com/kikiyou/docker-test'
