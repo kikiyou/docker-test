@@ -2,10 +2,10 @@
 import groovy.util.ConfigSlurper
 
 @NonCPS
-def configParse(file) {
+def configParse(config) {
     // new groovy.json.JsonSlurperClassic().parseText(json)
     echo "jjjjjjjjjjjjjj"
-    new groovy.util.ConfigSlurper().parse(new File(file).toURL())
+    new groovy.util.ConfigSlurper().parse(config).toURL())
 }
 
 node("master") {
@@ -21,7 +21,7 @@ node("master") {
       // Get some code from a GitHub repository
         git 'http://github.com/kikiyou/docker-test'
         // def config = new ConfigSlurper().parse(new File("/tmp/config.groovy").toURL())
-        def config = configParse('/tmp/config.groovy')
+        def config = configParse(readFile('/tmp/config.groovy'))
 
         def build_file = config.mongodb.build_file
         def build_version = config.mongodb.build_version
