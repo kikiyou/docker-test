@@ -10,10 +10,10 @@ node("master") {
     stage('Preparation') { // for display purposes
       // Get some code from a GitHub repository
         git 'http://github.com/kikiyou/docker-test'
-        config = new ConfigSlurper('mongodb').parse(new File(file).toURL())
-        def build_file = config.build_file
-        def build_version = config.build_version
-        def build_file_path = config.build_file_path
+        config = new ConfigSlurper().parse(new File("${file}").toURL())
+        def build_file = config.mongodb.build_file
+        def build_version = config.mongodb.build_version
+        def build_file_path = config.mongodb.build_file_path
       // Get the Maven tool.
       // ** NOTE: This 'M3' Maven tool must be configured
       // **       in the global configuration.           
