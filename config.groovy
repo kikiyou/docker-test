@@ -1,4 +1,4 @@
-registry-server = 'http://monkey.rhel.cc'
+registry-server = "http://monkey.rhel.cc"
 mongodb {
     image_name = 'library/mongodb'
     build_file = 'Fonsview.APIGW_R1.0.0_743.tar.gz'
