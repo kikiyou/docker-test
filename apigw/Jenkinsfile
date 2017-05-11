@@ -23,11 +23,6 @@ node("master") {
     sh "ls -l"
     
     stage('Preparation') { // for display purposes
-      // Get some code from a GitHub repository
-
-      // Get the Maven tool.
-      // ** NOTE: This 'M3' Maven tool must be configured
-      // **       in the global configuration.           
       sh "ls -l"
       sh "wget -q http://monkey.rhel.cc:8000/Fonsview.APIGW_R1.0.0_743.tar.gz "
    }
