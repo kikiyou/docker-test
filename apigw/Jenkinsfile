@@ -1,3 +1,8 @@
+package com.vanward.groovy.tmpl 
+import groovy.text.Template 
+import groovy.text.SimpleTemplateEngine 
+import java.io.File 
+
 build_version = '001'
 DOCKERFILE = """\
 FROM centos7.1-v1
