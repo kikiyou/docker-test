@@ -32,7 +32,7 @@ node("master") {
       sh "wget -q http://monkey.rhel.cc:8000/Fonsview.APIGW_R1.0.0_743.tar.gz "
    }
 
-    docker.withRegistry(registry-server, 'docker-registry') {
+    docker.withRegistry(registry_server, 'docker-registry') {
     
         stage "build"
         def app = docker.build("${image_name}:latest","--file apigw/Dockerfile --tag ${image_name}:${build_version} .")
