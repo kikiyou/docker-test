@@ -5,6 +5,21 @@
 def configParse(file) {
     def config = new groovy.util.ConfigSlurper().parse(new File(file).toURL())
 }
+DOCKERFILE = """\
+FROM centos7.1-v1
+
+MAINTAINER moneky monkey@fonsview.com
+
+ENV version 871
+
+ADD Fonsview.APIGW_R1.0.0_$version.tar.gz /tmp/
+RUN cd /tmp/Fonsview.APIGW_R1.0.0_$version && sh install.sh
+
+ADD run.sh /
+ENTRYPOINT sh /run.sh
+
+EXPOSE 22 80
+"""
 
 node("master") {
     git 'http://github.com/kikiyou/docker-test'
@@ -24,12 +39,15 @@ node("master") {
     
     stage('Preparation') { // for display purposes
       sh "ls -l"
-      sh "wget -q http://monkey.rhel.cc:8000/Fonsview.APIGW_R1.0.0_743.tar.gz "
+    //   sh "wget -q http://monkey.rhel.cc:8000/Fonsview.APIGW_R1.0.0_743.tar.gz "
+      sh "rsync -av "${build_file_path}/${build_file}" ."
    }
 
     docker.withRegistry(registry_server, 'docker-registry') {
     
         stage "build"
+        // writeFile(DOCKERFILE)
+        writeFile file: "apigw/Dockerfile", text: DOCKERFILE, encoding: "UTF-8"
         def app = docker.build("${image_name}:latest","--file apigw/Dockerfile --tag ${image_name}:${build_version} .")
 
         stage "publish"
