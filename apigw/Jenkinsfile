@@ -14,6 +14,10 @@ ENTRYPOINT sh /run.sh
 
 EXPOSE 22 80
 """
+binding = ["build_version":build_version] 
+engine = new SimpleTemplateEngine() 
+template = engine.createTemplate(DOCKERFILE).make(binding) 
+println template.toString()
 
 @NonCPS
 def configParse(file) {
@@ -48,7 +52,11 @@ node("master") {
     
         stage "build"
         // writeFile(DOCKERFILE)
-        writeFile file: "apigw/Dockerfile", text: DOCKERFILE, encoding: "UTF-8"
+        binding = ["build_version":build_version] 
+        engine = new SimpleTemplateEngine() 
+        template = engine.createTemplate(DOCKERFILE).make(binding) 
+        println template.toString()
+        writeFile file: "apigw/Dockerfile", text: template, encoding: "UTF-8"
         def app = docker.build("${image_name}:latest","--file apigw/Dockerfile --tag ${image_name}:${build_version} .")
 
         stage "publish"
