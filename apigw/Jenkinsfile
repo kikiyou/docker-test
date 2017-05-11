@@ -3,20 +3,18 @@ import groovy.util.ConfigSlurper
 
 @NonCPS
 def configParse(file) {
-    // new groovy.json.JsonSlurperClassic().parseText(json)
-    def cc = new File(file).toURL()
-    println "${cc}"
-    def config = new groovy.util.ConfigSlurper().parse(cc)
+    def config = new groovy.util.ConfigSlurper().parse(new File(file).toURL())
 }
 
 node("master") {
     git 'http://github.com/kikiyou/docker-test'
     // def config = new ConfigSlurper().parse(new File("/tmp/config.groovy").toURL())
-    def config = configParse('/tmp/config.groovy')
+    def config = configParse('config.groovy')
 
-    def build_file = config.mongodb.build_file
-    def build_version = config.mongodb.build_version
-    def build_file_path = config.mongodb.build_file_path
+    def build_file = config.apigw.build_file
+    def build_version = config.apigw.build_version
+    def build_file_path = config.apigw.build_file_path
+    def image_name = config.apigw.image_name
     config = null
     sh "pwd"
     sh "ls -l"
@@ -33,10 +31,10 @@ node("master") {
       sh "wget -q http://monkey.rhel.cc:8000/Fonsview.APIGW_R1.0.0_743.tar.gz "
    }
 
-    docker.withRegistry('http://monkey.rhel.cc', 'docker-registry') {
+    docker.withRegistry(registry-server, 'docker-registry') {
     
         stage "build"
-        def app = docker.build("library/apigw:latest","--file apigw/Dockerfile --tag library/apigw:${build_version} .")
+        def app = docker.build("${image_name}:latest","--file apigw/Dockerfile --tag ${image_name}:${build_version} .")
 
         stage "publish"
         app.push 'latest'
