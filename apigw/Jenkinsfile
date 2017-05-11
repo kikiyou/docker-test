@@ -8,19 +8,20 @@ def configParse(file) {
 
 node("master") {
     git 'http://github.com/kikiyou/docker-test'
-    // def config = new ConfigSlurper().parse(new File("/tmp/config.groovy").toURL())
-    def config = configParse('config.groovy')
+
+    file = "${WORKSPACE}/config.groovy"
+    println "---${file}---"
+    def config = configParse(file)
 
     def build_file = config.apigw.build_file
     def build_version = config.apigw.build_version
     def build_file_path = config.apigw.build_file_path
     def image_name = config.apigw.image_name
     config = null
+
     sh "pwd"
     sh "ls -l"
     
-    file = "${WORKSPACE}/config.groovy"
-    println "---${file}---"
     stage('Preparation') { // for display purposes
       // Get some code from a GitHub repository
 
