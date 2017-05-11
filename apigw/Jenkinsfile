@@ -1,5 +1,5 @@
-import groovy.util.ConfigObject
-import groovy.util.ConfigSlurper
+// import groovy.util.ConfigObject
+// import groovy.util.ConfigSlurper
 
 @NonCPS
 def configParse(file) {
