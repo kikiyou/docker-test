@@ -5,7 +5,21 @@
 def configParse(file) {
     def config = new groovy.util.ConfigSlurper().parse(new File(file).toURL())
 }
-def version = 871
+// def version = 871
+
+
+node("master") {
+    git 'http://github.com/kikiyou/docker-test'
+
+    file = "${WORKSPACE}/config.groovy"
+    println "---${file}---"
+    def config = configParse(file)
+    def registry_server = config.registry_server
+    def build_file = config.apigw.build_file
+    def build_version = config.apigw.build_version
+    def build_file_path = config.apigw.build_file_path
+    def image_name = config.apigw.image_name
+    config = null
 DOCKERFILE = """\
 FROM centos7.1-v1
 
@@ -21,20 +35,6 @@ ENTRYPOINT sh /run.sh
 
 EXPOSE 22 80
 """
-
-node("master") {
-    git 'http://github.com/kikiyou/docker-test'
-
-    file = "${WORKSPACE}/config.groovy"
-    println "---${file}---"
-    def config = configParse(file)
-    def registry_server = config.registry_server
-    def build_file = config.apigw.build_file
-    def build_version = config.apigw.build_version
-    def build_file_path = config.apigw.build_file_path
-    def image_name = config.apigw.image_name
-    config = null
-
     sh "pwd"
     sh "ls -l"
     
