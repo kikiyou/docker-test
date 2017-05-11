@@ -5,15 +5,16 @@
 def configParse(file) {
     def config = new groovy.util.ConfigSlurper().parse(new File(file).toURL())
 }
+def version = 871
 DOCKERFILE = """\
 FROM centos7.1-v1
 
 MAINTAINER moneky monkey@fonsview.com
 
-ENV version 871
+ENV version ${build_version}
 
-ADD Fonsview.APIGW_R1.0.0_$version.tar.gz /tmp/
-RUN cd /tmp/Fonsview.APIGW_R1.0.0_$version && sh install.sh
+ADD Fonsview.APIGW_R1.0.0_${build_version}.tar.gz /tmp/
+RUN cd /tmp/Fonsview.APIGW_R1.0.0_${build_version} && sh install.sh
 
 ADD run.sh /
 ENTRYPOINT sh /run.sh
