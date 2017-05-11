@@ -12,7 +12,7 @@ node("master") {
     file = "${WORKSPACE}/config.groovy"
     println "---${file}---"
     def config = configParse(file)
-
+    def registry_server = config.registry_server
     def build_file = config.apigw.build_file
     def build_version = config.apigw.build_version
     def build_file_path = config.apigw.build_file_path
