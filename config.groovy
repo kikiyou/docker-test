@@ -1,4 +1,5 @@
 registry_server = "http://monkey.rhel.cc"
+git_repo = "http://github.com/kikiyou/docker-test"
 mongodb {
     image_name = 'library/mongodb'
     build_file = 'Fonsview.APIGW_R1.0.0_743.tar.gz'

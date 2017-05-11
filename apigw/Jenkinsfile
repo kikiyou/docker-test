@@ -22,7 +22,7 @@ EXPOSE 22 80
 """
 
 node("master") {
-    git 'http://github.com/kikiyou/docker-test'
+    // git 'http://github.com/kikiyou/docker-test'
 
     file = "${WORKSPACE}/config.groovy"
     println "---${file}---"
@@ -40,7 +40,7 @@ node("master") {
     stage('Preparation') { // for display purposes
       sh "ls -l"
     //   sh "wget -q http://monkey.rhel.cc:8000/Fonsview.APIGW_R1.0.0_743.tar.gz "
-      sh "rsync -av "${build_file_path}/${build_file}" ."
+      sh "rsync -av "${build_file_path}\/${build_file}" ."
    }
 
     docker.withRegistry(registry_server, 'docker-registry') {
