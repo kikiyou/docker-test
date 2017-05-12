@@ -20,10 +20,10 @@ def get_add_content(build_file) {
 def get_remotefile(build_file,build_file_path) {
     def cmd = ""
     println build_file
-    build_file.each { k,v -> fragment = """sh "rsync -av \"${build_file_path}/${v}\" ." \n"""
+    build_file.each { k,v -> fragment = """sh "rsync -av \\"${build_file_path}/${v}\\" ." \n"""
     cmd += fragment
     }
-    writeFile file: 'steps.groovy', text: cmd
+    writeFile file: 'steps.groovy', text: cmd , encoding: "UTF-8"
 }
 
 node("master") {
