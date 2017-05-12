@@ -128,7 +128,7 @@ apigwui {
 
 wth {
     base_image = 'library/centos7.1-v1-tomcat-apr-ssl'
-    image_name = 'library/wth'
+    image_name = 'library/centos7.1-v1-wth'
     build_file = ['wth':'Fonsview.WTH_R1.0.0_789.tar.gz']
     build_version = '789'
     app_version = build_version
@@ -137,7 +137,7 @@ wth {
 
 aaa {
     base_image = 'library/centos7.1-v1-tomcat-apr-ssl'
-    image_name = 'library/aaa'
+    image_name = 'library/centos7.1-v1-aaa'
     build_file = ['aaa':'Fonsview.aaa_r3.0.0_51956.tar.gz']
     build_version = '51956'
     app_version = build_version
