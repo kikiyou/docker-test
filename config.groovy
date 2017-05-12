@@ -4,7 +4,7 @@ MAINTAINER = "monkey"
 
 mongodb {
     base_image = 'library/centos7.1-v1'
-    image_name = 'library/mongodb'
+    image_name = 'library/centos7.1-v1-mongodb'
     build_file = 'mongodb-linux-x86_64-rhel70-3.2.10.tgz'
     app_version = '3.2.10'
     build_version = '743'
@@ -13,7 +13,7 @@ mongodb {
 
 apigw {
     base_image = 'library/centos7.1-v1'
-    image_name = 'library/apigw'
+    image_name = 'library/centos7.1-v1-apigw'
     build_file = 'Fonsview.APIGW_R1.0.0_871.tar.gz'
     build_version = '871'
     build_file_path = '/home/monkey/it-fs/Upload/开放式架构版本/API GW'
