@@ -1,0 +1,94 @@
+
+@NonCPS
+def configParse(file) {
+    def config = new groovy.util.ConfigSlurper().parse(new File(file).toURL())
+}
+
+node("master") {
+    git 'http://github.com/kikiyou/docker-test'
+
+    file = "${WORKSPACE}/config.groovy"
+    println "---${file}---"
+    def config = configParse(file)
+    def registry_server = config.registry_server
+    def build_file = config.javabase.build_file
+    def build_version = config.javabase.build_version
+    def build_file_path = config.javabase.build_file_path
+    def image_name = config.javabase.image_name
+    def base_image = config.javabase.base_image
+    def app_version = config.javabase.app_version
+    def MAINTAINER = config.javabase.MAINTAINER
+
+    sh "pwd"
+    sh "ls -l"
+
+    stage('create Dockerfile') { // for display purposes
+    def add_content = ''
+    build_file.each { k,v -> fragment = """
+    ADD ${v} /tmp
+    """
+    add_content += fragment
+    }
+
+    DOCKERFILE = """\
+    # VERSION 1
+    # Author: monkey
+
+    FROM ${base_image}
+
+    MAINTAINER ${MAINTAINER}
+
+    ENV JAVA_HOME /opt/fonsview/3RD/jdk1.8
+    ENV CLASSPATH .:\$JAVA_HOME/lib/dt.jar:\$JAVA_HOME/lib/tools.jar
+    ENV JRE_HOME \$JAVA_HOME/jre
+    ENV PATH \$JAVA_HOME/bin:\$PATH
+    
+    ${add_content}
+
+    RUN cd /tmp &&\
+        tar xf Fonsview.3rd_party_jdk_1.8.tar.gz && \
+        cd Fonsview.3rd_party_jdk_1.8 && \
+        sh install.sh && \
+        cd /tmp && \
+        tar xf Fonsview.tomcat_7.0.63_*.tar.gz && \
+        cd Fonsview.tomcat_7.0.63_* && \
+        sh install.sh && \
+        rpm -ivh /tmp/apr-devel-1.4.8-3.el7.x86_64.rpm && \
+        cd /tmp && \
+        tar xf openssl-1.0.1v-dev.el7.x86_64.tar.gz && \
+        cd openssl* && \
+        ./config -fPIC --prefix=/usr/local --openssldir=/usr/local/openssl && \
+        make && make install && \
+        cd /opt/fonsview/3RD/tomcat7.0.63/bin/  && \
+        tar xvf tomcat-native.tar.gz && \
+        cd tomcat-native-*/jni/native/ && \
+        ./configure --with-apr=/usr/bin/apr-1-config --with-ssl=/usr/local/openssl && \
+        make && make install && \
+        rm -fr /tmp/*
+    
+    ADD run.sh /
+    ENTRYPOINT sh /run.sh
+
+    EXPOSE  6600
+    """
+    writeFile file: "javabase/Dockerfile", text: DOCKERFILE, encoding: "UTF-8"
+   }
+
+    stage('get remote file') { // for display purposes
+    build_file.each { k,v -> sh "rsync -av \"${build_file_path}/${v}\" ."
+    }
+      sh "ls -l"
+   }
+
+    docker.withRegistry(registry_server, 'docker-registry') {
+        stage "build"
+        def app = docker.build("${image_name}:latest","--file javabase/Dockerfile --tag ${image_name}:${build_version} .")
+
+        stage "publish"
+        app.push 'latest'
+        app.push "${build_version}"
+    }
+    
+    build_file = null
+    config = null
+}
