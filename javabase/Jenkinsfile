@@ -17,7 +17,7 @@ def get_add_content(build_file) {
 
 
 @NonCPS
-def get_remotefile(build_file) {
+def get_remotefile(build_file,build_file_path) {
     def add_content = ''
     build_file.each { k,v -> sh "rsync -av \"${build_file_path}/${v}\" ."
     }
@@ -91,7 +91,7 @@ node("master") {
    }
 
     stage('get remote file') { // for display purposes
-        get_remotefile(build_file)
+        get_remotefile(build_file,build_file_path)
         sh "ls -l"
    }
 
