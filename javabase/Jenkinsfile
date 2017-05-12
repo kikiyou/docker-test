@@ -15,6 +15,14 @@ def get_add_content(build_file) {
     return add_content
 }
 
+
+@NonCPS
+def get_remotefile(build_file) {
+    def add_content = ''
+    build_file.each { k,v -> sh "rsync -av \"${build_file_path}/${v}\" ."
+    }
+}
+
 node("master") {
     git 'http://github.com/kikiyou/docker-test'
 
@@ -36,7 +44,7 @@ node("master") {
     stage('create Dockerfile') { // for display purposes
 
     def add_content = get_add_content(build_file)
-    println add_content
+    // println add_content
     DOCKERFILE = """\
     # VERSION 1
     # Author: monkey
@@ -82,9 +90,8 @@ node("master") {
    }
 
     stage('get remote file') { // for display purposes
-    build_file.each { k,v -> sh "rsync -av \"${build_file_path}/${v}\" ."
-    }
-      sh "ls -l"
+        get_remotefile(build_file)
+        sh "ls -l"
    }
 
     docker.withRegistry(registry_server, 'docker-registry') {
