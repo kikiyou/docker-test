@@ -33,12 +33,12 @@ node("master") {
     println "---${file}---"
     def config = configParse(file)
     def registry_server = config.registry_server
-    def build_file = config.desktop.build_file
-    def build_version = config.desktop.build_version
-    def build_file_path = config.desktop.build_file_path
-    def image_name = config.desktop.image_name
-    def base_image = config.desktop.base_image
-    def app_version = config.desktop.app_version
+    def build_file = config.favorite.build_file
+    def build_version = config.favorite.build_version
+    def build_file_path = config.favorite.build_file_path
+    def image_name = config.favorite.image_name
+    def base_image = config.favorite.base_image
+    def app_version = config.favorite.app_version
     def MAINTAINER = config.MAINTAINER
     config = null
     echo build_file_path
@@ -57,7 +57,7 @@ node("master") {
 
     MAINTAINER ${MAINTAINER}
 
-    ENV TOPIC desktopserver
+    ENV TOPIC favoriteserver
     ENV VERSION ${app_version}
     # copy packages
     ${add_content}
@@ -65,13 +65,13 @@ node("master") {
     # install
     RUN cd /tmp/Fonsview.favorite_R1.0.0_${app_version} && sh install.sh && sed -i "s/apigw/\$TOPIC/" /etc/rsyslog.conf
     #ADD context.xml /opt/fonsview/3RD/tomcat7.0.63/conf/context.xml
-    ADD desktop/run.sh /
+    ADD favorite/run.sh /
     ENTRYPOINT sh /run.sh
 
     EXPOSE 22 6600
 
     """
-    writeFile file: "desktop/Dockerfile", text: DOCKERFILE, encoding: "UTF-8"
+    writeFile file: "favorite/Dockerfile", text: DOCKERFILE, encoding: "UTF-8"
    }
 
     stage('get remote file') { // for display purposes
@@ -82,7 +82,7 @@ node("master") {
 
     docker.withRegistry(registry_server, 'docker-registry') {
         stage "build"
-        def app = docker.build("${image_name}:latest","--file desktop/Dockerfile --tag ${image_name}:${build_version} .")
+        def app = docker.build("${image_name}:latest","--file favorite/Dockerfile --tag ${image_name}:${build_version} .")
 
         stage "publish"
         app.push 'latest'
