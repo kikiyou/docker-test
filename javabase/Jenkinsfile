@@ -66,7 +66,7 @@ node("master") {
 
     RUN ls -l /tmp
     RUN cd /tmp/Fonsview.3rd_party_jdk_1.8 && \
-        sh /tmp/install.sh 
+        sh install.sh 
     RUN  cd /tmp && \
         cd Fonsview.tomcat_7.0.63_* && \
         sh install.sh
