@@ -38,6 +38,7 @@ node("master") {
     def app_version = config.javabase.app_version
     def MAINTAINER = config.javabase.MAINTAINER
     config = null
+    echo build_file_path
     sh "pwd"
     sh "ls -l"
 
