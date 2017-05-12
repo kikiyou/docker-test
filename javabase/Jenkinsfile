@@ -73,7 +73,7 @@ node("master") {
         make && make install && \
         rm -fr /tmp/*
     
-    ADD run.sh /
+    ADD javabase/run.sh /
     ENTRYPOINT sh /run.sh
 
     EXPOSE  6600
