@@ -41,7 +41,7 @@ node("master") {
 
     EXPOSE 27017
     VOLUME /usr/local/cluster/instance1
-    ADD run.sh /run.sh
+    ADD mongodb/run.sh /run.sh
     ENTRYPOINT /run.sh
     """
     sh "pwd"
