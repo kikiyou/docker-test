@@ -1,13 +1,18 @@
 registry_server = "http://monkey.rhel.cc"
 git_repo = "http://github.com/kikiyou/docker-test"
+MAINTAINER = "monkey"
+
 mongodb {
+    base_image = 'library/centos7.1-v1'
     image_name = 'library/mongodb'
     build_file = 'Fonsview.APIGW_R1.0.0_743.tar.gz'
+    app_version = '3.2.10'
     build_version = '743'
     build_file_path = '/home/monkey/it-fs/Upload/SS Department/monkey/mongodb'
 }
 
 apigw {
+    base_image = 'library/centos7.1-v1'
     image_name = 'library/apigw'
     build_file = 'Fonsview.APIGW_R1.0.0_871.tar.gz'
     build_version = '871'

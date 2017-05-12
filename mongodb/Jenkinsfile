@@ -1,0 +1,65 @@
+
+@NonCPS
+def configParse(file) {
+    def config = new groovy.util.ConfigSlurper().parse(new File(file).toURL())
+}
+
+node("master") {
+    git 'http://github.com/kikiyou/docker-test'
+
+    file = "${WORKSPACE}/config.groovy"
+    println "---${file}---"
+    def config = configParse(file)
+    def registry_server = config.registry_server
+    def build_file = config.mongodb.build_file
+    def build_version = config.mongodb.build_version
+    def build_file_path = config.mongodb.build_file_path
+    def image_name = config.mongodb.image_name
+    def base_image = config.mongodb.base_image
+    def app_version = config.mongodb.app_version
+
+    config = null
+
+    DOCKERFILE = """\
+    # VERSION 1
+    FROM ${base_image}
+
+    MAINTAINER ${MAINTAINER}
+
+    ENV MONGODB_VERSION=${app_version} \
+        TERM=xterm
+
+    COPY ${build_file} ./
+    RUN rm -f /etc/localtime && ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+        && mkdir -p /usr/local/cluster \
+        && tar -xzf ${build_file} \
+        && mv mongodb-linux-x86_64-rhel70-${build_version}  /usr/local/cluster/mongodb \
+        && echo "MONGOD_HOME=/usr/local/cluster/mongodb" > /etc/profile.d/mongod.sh \
+        && echo "export PATH=\$PATH:/usr/local/cluster/mongodb/bin" >> /etc/profile.d/mongod.shi \
+        && rm -f ${build_file}
+
+    EXPOSE 27017
+    VOLUME /usr/local/cluster/instance1
+    ADD run.sh /run.sh
+    ENTRYPOINT /run.sh
+    """
+    sh "pwd"
+    sh "ls -l"
+    
+    stage('Preparation') { // for display purposes
+      sh "ls -l"
+      sh "rsync -av \"${build_file_path}/${build_file}\" ."
+   }
+
+    docker.withRegistry(registry_server, 'docker-registry') {
+    
+        stage "build"
+
+        writeFile file: "mongodb/Dockerfile", text: DOCKERFILE, encoding: "UTF-8"
+        def app = docker.build("${image_name}:latest","--file mongodb/Dockerfile --tag ${image_name}:${build_version} .")
+
+        stage "publish"
+        app.push 'latest'
+        app.push "${build_version}"
+    }
+}
