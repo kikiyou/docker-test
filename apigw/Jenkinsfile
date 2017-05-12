@@ -57,7 +57,7 @@ node("master") {
         // engine = new SimpleTemplateEngine() 
         // template = engine.createTemplate(DOCKERFILE).make(binding) 
         // println template.toString()
-        writeFile file: "apigw/Dockerfile", text: template, encoding: "UTF-8"
+        writeFile file: "apigw/Dockerfile", text: DOCKERFILE, encoding: "UTF-8"
 
         binding = null
         engine = null
