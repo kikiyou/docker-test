@@ -27,6 +27,7 @@ def get_remotefile(build_file,build_file_path) {
 }
 
 node("master") {
+    deleteDir()
     git 'http://github.com/kikiyou/docker-test'
 
     file = "${WORKSPACE}/config.groovy"
@@ -90,4 +91,5 @@ node("master") {
     }
     
     build_file = null
+    deleteDir()
 }
