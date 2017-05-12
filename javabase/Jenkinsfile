@@ -39,7 +39,7 @@ node("master") {
     def image_name = config.javabase.image_name
     def base_image = config.javabase.base_image
     def app_version = config.javabase.app_version
-    def MAINTAINER = config.javabase.MAINTAINER
+    def MAINTAINER = config.MAINTAINER
     config = null
     echo build_file_path
     sh "pwd"
