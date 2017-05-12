@@ -1,0 +1,93 @@
+
+@NonCPS
+def configParse(file) {
+    def config = new groovy.util.ConfigSlurper().parse(new File(file).toURL())
+}
+
+@NonCPS
+def get_add_content(build_file) {
+    def add_content = ''
+    build_file.each { k,v -> fragment = """
+    ADD ${v} /tmp/
+    """
+    add_content += fragment
+    }
+    return add_content
+}
+
+
+@NonCPS
+def get_remotefile(build_file,build_file_path) {
+    def cmd = ""
+    println build_file
+    build_file.each { k,v -> fragment = """sh "rsync -av \\"${build_file_path}/${v}\\" ." \n"""
+    cmd += fragment
+    }
+    writeFile file: 'steps.groovy', text: cmd , encoding: "UTF-8"
+}
+
+node("master") {
+    git 'http://github.com/kikiyou/docker-test'
+
+    file = "${WORKSPACE}/config.groovy"
+    println "---${file}---"
+    def config = configParse(file)
+    def registry_server = config.registry_server
+    def build_file = config.ms.build_file
+    def build_version = config.ms.build_version
+    def build_file_path = config.ms.build_file_path
+    def image_name = config.ms.image_name
+    def base_image = config.ms.base_image
+    def app_version = config.ms.app_version
+    def MAINTAINER = config.MAINTAINER
+    config = null
+    echo build_file_path
+    sh "pwd"
+    sh "ls -l"
+
+    stage('create Dockerfile') { // for display purposes
+
+    def add_content = get_add_content(build_file)
+    // println add_content
+    DOCKERFILE = """\
+    # VERSION 1
+    # Author: monkey
+
+    FROM ${base_image}
+
+    MAINTAINER ${MAINTAINER}
+
+    ENV TOPIC ms
+    ENV VERSION ${app_version}
+    # copy packages
+    ${add_content}
+
+    # install
+    RUN cd /tmp/Fonsview.MS_R1.0.0_${app_version} && sh install.sh && sed -i "s/apigw/\$TOPIC/" /etc/rsyslog.conf
+    #ADD context.xml /opt/fonsview/3RD/tomcat7.0.63/conf/context.xml
+    ADD ms/run.sh /
+    ENTRYPOINT sh /run.sh
+
+    EXPOSE 22 6600
+
+    """
+    writeFile file: "ms/Dockerfile", text: DOCKERFILE, encoding: "UTF-8"
+   }
+
+    stage('get remote file') { // for display purposes
+        get_remotefile(build_file,build_file_path)
+        load 'steps.groovy'
+        sh "ls -l"
+   }
+
+    docker.withRegistry(registry_server, 'docker-registry') {
+        stage "build"
+        def app = docker.build("${image_name}:latest","--file ms/Dockerfile --tag ${image_name}:${build_version} .")
+
+        stage "publish"
+        app.push 'latest'
+        app.push "${build_version}"
+    }
+    
+    build_file = null
+}
