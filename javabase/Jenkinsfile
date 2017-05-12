@@ -4,6 +4,12 @@ def configParse(file) {
     def config = new groovy.util.ConfigSlurper().parse(new File(file).toURL())
 }
 
+@NonCPS
+def get_key(dict,k) {
+    def v = dict.get(k)
+}
+
+@NonCPS
 node("master") {
     git 'http://github.com/kikiyou/docker-test'
 
