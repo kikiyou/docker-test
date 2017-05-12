@@ -35,7 +35,7 @@ node("master") {
     ADD Fonsview.APIGW_R1.0.0_${build_version}.tar.gz /tmp/
     RUN cd /tmp/Fonsview.APIGW_R1.0.0_${build_version} && sh install.sh
 
-    ADD run.sh /
+    ADD apigw/run.sh /
     ENTRYPOINT sh /run.sh
 
     EXPOSE 22 80
