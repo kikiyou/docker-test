@@ -13,7 +13,7 @@ def configParse(file) {
 
 
 node("master") {
-    // git 'http://github.com/kikiyou/docker-test'
+    git 'http://github.com/kikiyou/docker-test'
 
     file = "${WORKSPACE}/config.groovy"
     println "---${file}---"
