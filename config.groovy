@@ -32,5 +32,6 @@ epg {
     image_name = 'library/centos7.1-v1-epg_server'
     build_file = ['epg':'Fonsview.epg_server_R1.0.0_872.tar.gz']
     build_version = '872'
+    app_version = build_version
     build_file_path = '/home/monkey/it-fs/Upload/开放式架构版本/EPG_SERVER'
 }
