@@ -116,3 +116,12 @@ authen {
     app_version = build_version
     build_file_path = '/home/monkey/it-fs/Upload/开放式架构版本/AUTHEN'
 }
+
+apigwui {
+    base_image = 'library/centos7.1-v1-tomcat-apr-ssl'
+    image_name = 'library/centos7.1-v1-apigwui'
+    build_file = ['apigwui':'Fonsview.apigwui_R1.0.0_v2.tar.gz']
+    build_version = 'v2'
+    app_version = build_version
+    build_file_path = '/home/monkey/it-fs/Upload/开放式架构版本/MONITOR'
+}
