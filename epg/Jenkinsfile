@@ -60,7 +60,7 @@ node("master") {
     ENV TOPIC epgserver
     ENV VERSION ${app_version}
     # copy packages
-    ADD ${build_file} /tmp/
+    ${add_content}
 
     # install
     RUN cd /tmp/Fonsview.epg_server_R1.0.0_${app_version} && sh install.sh && sed -i "s/apigw/\$TOPIC/" /etc/rsyslog.conf
