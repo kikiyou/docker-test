@@ -64,10 +64,10 @@ node("master") {
     
     ${add_content}
 
-    RUN cd /tmp &&\
-        tar xf Fonsview.3rd_party_jdk_1.8.tar.gz && \
-        cd Fonsview.3rd_party_jdk_1.8 && \
-        sh install.sh 
+    RUN ls -l /tmp  &&\
+        tar xf /tmp/Fonsview.3rd_party_jdk_1.8.tar.gz -C /tmp && \
+        cd /tmp/Fonsview.3rd_party_jdk_1.8 && \
+        sh /tmp/install.sh 
     RUN  cd /tmp && \
         tar xf Fonsview.tomcat_7.0.63_*.tar.gz && \
         cd Fonsview.tomcat_7.0.63_* && \
