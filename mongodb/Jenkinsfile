@@ -34,7 +34,7 @@ node("master") {
     RUN rm -f /etc/localtime && ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
         && mkdir -p /usr/local/cluster \
         && tar -xzf ${build_file} \
-        && mv mongodb-linux-x86_64-rhel70-${build_version}  /usr/local/cluster/mongodb \
+        && mv mongodb-linux-x86_64-rhel70-${app_version}  /usr/local/cluster/mongodb \
         && echo "MONGOD_HOME=/usr/local/cluster/mongodb" > /etc/profile.d/mongod.sh \
         && echo "export PATH=\$PATH:/usr/local/cluster/mongodb/bin" >> /etc/profile.d/mongod.shi \
         && rm -f ${build_file}
