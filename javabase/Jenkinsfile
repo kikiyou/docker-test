@@ -65,8 +65,8 @@ node("master") {
     ${add_content}
 
     RUN ls -l /tmp  &&\
-        tar xf /tmp/Fonsview.3rd_party_jdk_1.8.tar.gz -C /tmp && \
-        cd /tmp/Fonsview.3rd_party_jdk_1.8 && \
+    RUN tar xf /tmp/Fonsview.3rd_party_jdk_1.8.tar.gz -C /tmp 
+    RUN cd /tmp/Fonsview.3rd_party_jdk_1.8 && \
         sh /tmp/install.sh 
     RUN  cd /tmp && \
         tar xf Fonsview.tomcat_7.0.63_*.tar.gz && \
