@@ -65,16 +65,13 @@ node("master") {
     ${add_content}
 
     RUN ls -l /tmp
-    RUN tar xf /tmp/Fonsview.3rd_party_jdk_1.8.tar.gz -C /tmp 
     RUN cd /tmp/Fonsview.3rd_party_jdk_1.8 && \
         sh /tmp/install.sh 
     RUN  cd /tmp && \
-        tar xf Fonsview.tomcat_7.0.63_*.tar.gz && \
         cd Fonsview.tomcat_7.0.63_* && \
         sh install.sh
     RUN rpm -ivh /tmp/apr-devel-1.4.8-3.el7.x86_64.rpm
     RUN cd /tmp && \
-        tar xf openssl-1.0.1v-dev.el7.x86_64.tar.gz && \
         cd openssl* && \
         ./config -fPIC --prefix=/usr/local --openssldir=/usr/local/openssl && \
         make && make install
