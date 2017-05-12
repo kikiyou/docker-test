@@ -64,7 +64,7 @@ node("master") {
     
     ${add_content}
 
-    RUN ls -l /tmp  &&\
+    RUN ls -l /tmp
     RUN tar xf /tmp/Fonsview.3rd_party_jdk_1.8.tar.gz -C /tmp 
     RUN cd /tmp/Fonsview.3rd_party_jdk_1.8 && \
         sh /tmp/install.sh 
