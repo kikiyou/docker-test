@@ -1,9 +1,3 @@
-// package com.vanward.groovy.tmpl 
-// import groovy.text.Template 
-// import groovy.text.SimpleTemplateEngine 
-// import java.io.File 
-
-
 
 @NonCPS
 def configParse(file) {
