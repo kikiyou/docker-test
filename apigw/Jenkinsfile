@@ -52,16 +52,8 @@ node("master") {
     docker.withRegistry(registry_server, 'docker-registry') {
     
         stage "build"
-        // writeFile(DOCKERFILE)
-        // binding = ["build_version":build_version] 
-        // engine = new SimpleTemplateEngine() 
-        // template = engine.createTemplate(DOCKERFILE).make(binding) 
-        // println template.toString()
-        writeFile file: "apigw/Dockerfile", text: DOCKERFILE, encoding: "UTF-8"
 
-        binding = null
-        engine = null
-        template = null
+        writeFile file: "apigw/Dockerfile", text: DOCKERFILE, encoding: "UTF-8"
         def app = docker.build("${image_name}:latest","--file apigw/Dockerfile --tag ${image_name}:${build_version} .")
 
         stage "publish"
