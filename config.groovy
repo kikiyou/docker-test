@@ -80,3 +80,12 @@ mss {
     app_version = build_version
     build_file_path = '/home/monkey/it-fs/Upload/开放式架构版本/MSS'
 }
+
+rss {
+    base_image = 'library/centos7.1-v1-tomcat-apr-ssl'
+    image_name = 'library/centos7.1-v1-rss'
+    build_file = ['rss':'Fonsview.rss_R1.0.0_782.tar.gz']
+    build_version = '782'
+    app_version = build_version
+    build_file_path = '/home/monkey/it-fs/Upload/开放式架构版本/RSS'
+}
