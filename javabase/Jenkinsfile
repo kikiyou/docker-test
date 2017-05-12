@@ -12,6 +12,7 @@ def get_add_content(build_file) {
     """
     add_content += fragment
     }
+    return add_content
 }
 
 node("master") {
