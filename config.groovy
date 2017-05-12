@@ -21,9 +21,9 @@ apigw {
 
 javabase {
     base_image = 'library/centos7.1-v1'
-    image_name = 'library/apigw'
+    image_name = 'library/centos7.1-v1-tomcat-apr-ssl'
     build_file = ['jdk':'Fonsview.3rd_party_jdk_1.8.tar.gz','tomcat':'Fonsview.tomcat_7.0.63_50464.tar.gz','apr-devel':'apr-devel-1.4.8-3.el7.x86_64.rpm','openssl':'openssl-1.0.1v-dev.el7.x86_64.tar.gz']
-    // build_version = '871'
+    build_version = '7.0.63'
     build_file_path = '/home/monkey/it-fs/Upload/开放式架构版本/JAVABASE'
 }
 
