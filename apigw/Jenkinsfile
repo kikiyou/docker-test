@@ -3,26 +3,7 @@
 // import groovy.text.SimpleTemplateEngine 
 // import java.io.File 
 
-build_version = '001'
-DOCKERFILE = """\
-FROM centos7.1-v1
 
-MAINTAINER moneky monkey@fonsview.com
-
-ENV version ${build_version}
-
-ADD Fonsview.APIGW_R1.0.0_${build_version}.tar.gz /tmp/
-RUN cd /tmp/Fonsview.APIGW_R1.0.0_${build_version} && sh install.sh
-
-ADD run.sh /
-ENTRYPOINT sh /run.sh
-
-EXPOSE 22 80
-"""
-binding = ["build_version":build_version] 
-engine = new SimpleTemplateEngine() 
-template = engine.createTemplate(DOCKERFILE).make(binding) 
-println template.toString()
 
 @NonCPS
 def configParse(file) {
@@ -44,6 +25,21 @@ node("master") {
     def image_name = config.apigw.image_name
     config = null
 
+    DOCKERFILE = """\
+    FROM centos7.1-v1
+
+    MAINTAINER moneky
+
+    ENV version ${build_version}
+
+    ADD Fonsview.APIGW_R1.0.0_${build_version}.tar.gz /tmp/
+    RUN cd /tmp/Fonsview.APIGW_R1.0.0_${build_version} && sh install.sh
+
+    ADD run.sh /
+    ENTRYPOINT sh /run.sh
+
+    EXPOSE 22 80
+    """
     sh "pwd"
     sh "ls -l"
     
