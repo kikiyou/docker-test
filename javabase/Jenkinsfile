@@ -5,8 +5,13 @@ def configParse(file) {
 }
 
 @NonCPS
-def get_key(dict,k) {
-    def v = dict.get(k)
+def get_add_content(build_file) {
+    def add_content = ''
+    build_file.each { k,v -> fragment = """
+    ADD ${v} /tmp
+    """
+    add_content += fragment
+    }
 }
 
 // @NonCPS
@@ -29,13 +34,8 @@ node("master") {
     sh "ls -l"
 
     stage('create Dockerfile') { // for display purposes
-    def add_content = ''
-    build_file.each { k,v -> fragment = """
-    ADD ${v} /tmp
-    """
-    add_content += fragment
-    }
 
+    def add_content = get_add_content(build_file)
     DOCKERFILE = """\
     # VERSION 1
     # Author: monkey
