@@ -53,10 +53,10 @@ node("master") {
     
         stage "build"
         // writeFile(DOCKERFILE)
-        binding = ["build_version":build_version] 
-        engine = new SimpleTemplateEngine() 
-        template = engine.createTemplate(DOCKERFILE).make(binding) 
-        println template.toString()
+        // binding = ["build_version":build_version] 
+        // engine = new SimpleTemplateEngine() 
+        // template = engine.createTemplate(DOCKERFILE).make(binding) 
+        // println template.toString()
         writeFile file: "apigw/Dockerfile", text: template, encoding: "UTF-8"
 
         binding = null
