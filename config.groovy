@@ -98,3 +98,12 @@ search {
     app_version = build_version
     build_file_path = '/home/monkey/it-fs/Upload/开放式架构版本/SEARCH'
 }
+
+stats {
+    base_image = 'library/centos7.1-v1-tomcat-apr-ssl'
+    image_name = 'library/centos7.1-v1-stats'
+    build_file = ['stats':'Fonsview.stats_R1.0.0_787.tar.gz']
+    build_version = '787'
+    app_version = build_version
+    build_file_path = '/home/monkey/it-fs/Upload/开放式架构版本/STATS'
+}
