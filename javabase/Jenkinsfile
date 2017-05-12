@@ -8,7 +8,7 @@ def configParse(file) {
 def get_add_content(build_file) {
     def add_content = ''
     build_file.each { k,v -> fragment = """
-    ADD ${v} /tmp
+    ADD ${v} /tmp/
     """
     add_content += fragment
     }
