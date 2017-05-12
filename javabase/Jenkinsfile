@@ -9,7 +9,7 @@ def get_key(dict,k) {
     def v = dict.get(k)
 }
 
-@NonCPS
+// @NonCPS
 node("master") {
     git 'http://github.com/kikiyou/docker-test'
 
