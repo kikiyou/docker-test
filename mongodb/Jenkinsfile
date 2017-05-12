@@ -17,6 +17,7 @@ node("master") {
     def image_name = config.mongodb.image_name
     def base_image = config.mongodb.base_image
     def app_version = config.mongodb.app_version
+    def MAINTAINER = config.mongodb.MAINTAINER
 
     config = null
 
