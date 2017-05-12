@@ -18,12 +18,14 @@ def get_add_content(build_file) {
 
 @NonCPS
 def get_remotefile(build_file,build_file_path) {
-    def add_content = ''
+    def cmd=""
     println build_file
-    build_file.each { k,v ->
-    sh "rsync -av \"${build_file_path}/${v}\" ."
-    println "11111"
+    build_file.each { k,v -> fragment = """
+    sh rsync -av \"${build_file_path}/${v}\" .
+    """
+    cmd += fragment
     }
+    writeFile file: 'steps.groovy', text: cmd
 }
 
 node("master") {
@@ -95,6 +97,7 @@ node("master") {
 
     stage('get remote file') { // for display purposes
         get_remotefile(build_file,build_file_path)
+        load 'steps.groovy'
         sh "ls -l"
    }
 
