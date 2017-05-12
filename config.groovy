@@ -71,3 +71,12 @@ ms {
     app_version = build_version
     build_file_path = '/home/monkey/it-fs/Upload/开放式架构版本/MS'
 }
+
+mss {
+    base_image = 'library/centos7.1-v1-tomcat-apr-ssl'
+    image_name = 'library/centos7.1-v1-mss'
+    build_file = ['mss':'Fonsview.MSS_R1.0.0_791.tar.gz']
+    build_version = '791'
+    app_version = build_version
+    build_file_path = '/home/monkey/it-fs/Upload/开放式架构版本/MSS'
+}
