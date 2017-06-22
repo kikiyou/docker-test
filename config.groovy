@@ -1,4 +1,4 @@
-registry_server = "http://monkey.rhel.cc"
+registry_server = "http://172.16.18.5:30088"
 git_repo = "http://github.com/kikiyou/docker-test"
 MAINTAINER = "monkey"
 
@@ -39,8 +39,8 @@ epg {
 desktop {
     base_image = 'library/centos7.1-v1-tomcat-apr-ssl'
     image_name = 'library/centos7.1-v1-desktop'
-    build_file = ['desktop':'Fonsview.DESKTOP_R1.0.0_783.tar.gz']
-    build_version = '783'
+    build_file = ['desktop':'Fonsview.DESKTOP_R1.0.0_905.tar.gz']
+    build_version = '905'
     app_version = build_version
     build_file_path = '/home/monkey/it-fs/Upload/开放式架构版本/DESKTOP'
 }
