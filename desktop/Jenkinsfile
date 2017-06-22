@@ -67,6 +67,7 @@ node("master") {
     #ADD context.xml /opt/fonsview/3RD/tomcat7.0.63/conf/context.xml
     ADD desktop/run.sh /
     RUN ls -l /opt/fonsview/NE/
+    RUN ls -l /opt/fonsview/NE/desktop/
     RUN ln -sf /dev/stdout  /opt/fonsview/NE/*/log/*.log
     ENTRYPOINT sh /run.sh
 
