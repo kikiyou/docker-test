@@ -66,8 +66,6 @@ node("master") {
     RUN cd /tmp/Fonsview.DESKTOP_R1.0.0_${app_version} && sh install.sh && sed -i "s/apigw/\$TOPIC/" /etc/rsyslog.conf
     #ADD context.xml /opt/fonsview/3RD/tomcat7.0.63/conf/context.xml
     ADD desktop/run.sh /
-    RUN mkdir -p  /opt/fonsview/NE/desktop/log/
-    RUN ln -sf /dev/stdout  /opt/fonsview/NE/*/log/*.log
     ENTRYPOINT sh /run.sh
 
     EXPOSE 22 6600
