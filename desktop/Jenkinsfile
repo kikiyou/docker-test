@@ -63,7 +63,7 @@ node("master") {
     ${add_content}
 
     # install
-    RUN cd /tmp/Fonsview.favorite_R1.0.0_${app_version} && sh install.sh && sed -i "s/apigw/\$TOPIC/" /etc/rsyslog.conf
+    RUN cd /tmp/Fonsview.DESKTOP_R1.0.0_${app_version} && sh install.sh && sed -i "s/apigw/\$TOPIC/" /etc/rsyslog.conf
     #ADD context.xml /opt/fonsview/3RD/tomcat7.0.63/conf/context.xml
     ADD desktop/run.sh /
     RUN ln -sf /dev/stdout  /opt/fonsview/NE/*/log/*.log
